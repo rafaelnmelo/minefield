@@ -1,41 +1,40 @@
 import React, { Component } from 'react'
-import {
-  SafeAreaView,
-  StyleSheet,
-  Text,
-  Platform
-} from 'react-native'
+import { SafeAreaView, StyleSheet, Text } from 'react-native'
 import params from './src/params'
+import Field from './src/components/Field'
 
 export default class App extends Component {
   render() {
     return (
-      <SafeAreaView>
-        <Text>Iniciando Campo Minado</Text>
-        <Text>
+      <SafeAreaView style={styles.container}>
+        <Text style={styles.welcome}>
+          Iniciando Campo Minado
+        </Text>
+        <Text style={styles.instructions}>
           Tamanho da grade:
           {params.getRowsAmount()}x{params.getColumnsAmount()}
         </Text>
+        <Field />
       </SafeAreaView>
     )
   }
 }
 
 const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
+  container: {
+    flex: 1,
+    justifyContent: 'top',
+    alignItems: 'center',
+    backgroundColor: '#F%FCFF'
   },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
+  welcome: {
+    fontSize: 20,
+    textAlign: 'center',
+    margin: 10
   },
-  sectionDescription: {
-    marginTop: 8,
+  instructions: {
     fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
+    textAlign: 'center',
+    margin: 10
+  }
 })
