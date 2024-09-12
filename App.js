@@ -15,6 +15,11 @@ export default class App extends Component {
           {params.getRowsAmount()}x{params.getColumnsAmount()}
         </Text>
         <Field />
+        <Field opened />
+        <Field opened nearMines={1}/>
+        <Field opened nearMines={2}/>
+        <Field opened nearMines={3}/>
+        <Field opened nearMines={6}/>
       </SafeAreaView>
     )
   }
@@ -35,6 +40,6 @@ const styles = StyleSheet.create({
   instructions: {
     fontSize: 18,
     textAlign: 'center',
-    margin: 10
+    margin: 5
   }
 })
