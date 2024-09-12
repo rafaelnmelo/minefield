@@ -17,7 +17,6 @@ const styles = StyleSheet.create({
     container: {
         alignItems: 'center',
         justifyContent: 'center'
-
     },
     coreMine: {
         height: 14,
