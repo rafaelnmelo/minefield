@@ -1,10 +1,30 @@
 import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, Text } from 'react-native'
 import params from './src/params'
-import Field from './src/components/Field'
-import Flag from './src/components/Flag'
+import { creatMinedBoard } from './src/functions'
+import MineField from './src/components/MineField'
 
 export default class App extends Component {
+
+  constructor(props) {
+    super(props)
+    this.state = this.createState()
+  }
+
+  minesAmount = () => {
+    const cols = params.getColumnsAmount()
+    const rows = params.getRowsAmount()
+    return Math.ceil(cols * rows * params.difficultlevel)
+  }
+
+  createState = () => {
+    const cols = params.getColumnsAmount()
+    const rows = params.getRowsAmount()
+    return {
+      board: creatMinedBoard(rows, cols, this.minesAmount())
+    }
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
@@ -15,18 +35,9 @@ export default class App extends Component {
           Tamanho da grade:
           {params.getRowsAmount()}x{params.getColumnsAmount()}
         </Text>
-        <Flag bigger/>
-        <Field />
-        <Field opened />
-        <Field opened nearMines={1}/>
-        <Field opened nearMines={2}/>
-        <Field opened nearMines={3}/>
-        <Field opened nearMines={6}/>
-        <Field mined />
-        <Field mined opened />
-        <Field mined opened exploded/>
-        <Field flagged/>
-        <Field flagged opened />
+        <SafeAreaView style={styles.board}>
+          <MineField board={this.state.board} />
+        </SafeAreaView>
       </SafeAreaView>
     )
   }
@@ -35,18 +46,10 @@ export default class App extends Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'top',
+    justifyContent: 'flex-end'
+  },
+  board: {
     alignItems: 'center',
-    backgroundColor: '#F%FCFF'
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10
-  },
-  instructions: {
-    fontSize: 18,
-    textAlign: 'center',
-    margin: 5
+    backgroundColor: '#AAA'
   }
 })
