@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { SafeAreaView, StyleSheet, Text } from 'react-native'
 import params from './src/params'
-import { creatMinedBoard } from './src/functions'
+import { createMinedBoard } from './src/functions'
 import MineField from './src/components/MineField'
 
 export default class App extends Component {
@@ -21,7 +21,7 @@ export default class App extends Component {
     const cols = params.getColumnsAmount()
     const rows = params.getRowsAmount()
     return {
-      board: creatMinedBoard(rows, cols, this.minesAmount())
+      board: createMinedBoard(rows, cols, this.minesAmount())
     }
   }
 
