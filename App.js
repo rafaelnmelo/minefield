@@ -1,12 +1,13 @@
 import React, { Component } from 'react'
-import { SafeAreaView, StyleSheet, Text, Alert } from 'react-native'
+import { StyleSheet, Text, SafeAreaView, Alert } from 'react-native'
 import params from './src/params'
+import MineField from './src/components/MineField'
+import Header from './src/components/Header'
+import LevelSelection from './src/screens/LevelSelection'
 import {
   createMinedBoard, cloneBoard, openField, hadExplosion,
   wonGame, showMines, invertFlag, flagsUsed
 } from './src/functions'
-import MineField from './src/components/MineField'
-import Header from './src/components/Header'
 
 export default class App extends Component {
 
@@ -18,7 +19,7 @@ export default class App extends Component {
   minesAmount = () => {
     const cols = params.getColumnsAmount()
     const rows = params.getRowsAmount()
-    return Math.ceil(cols * rows * params.difficultlevel)
+    return Math.ceil(cols * rows * params.difficultLevel)
   }
 
   createState = () => {
@@ -27,7 +28,8 @@ export default class App extends Component {
     return {
       board: createMinedBoard(rows, cols, this.minesAmount()),
       won: false,
-      lost: false
+      lost: false,
+      showLevelSelection: false,
     }
   }
 
@@ -39,11 +41,11 @@ export default class App extends Component {
 
     if (lost) {
       showMines(board)
-      Alert.alert('Perdeuuu!', 'Continue tentando!')
+      Alert.alert('Perdeeeeu!', 'Que buuuurro!')
     }
 
     if (won) {
-      Alert.alert('Parabéns!', 'Continue sendo foda!')
+      Alert.alert('Parabéns', 'Você Venceu!')
     }
 
     this.setState({ board, lost, won })
@@ -55,15 +57,23 @@ export default class App extends Component {
     const won = wonGame(board)
 
     if (won) {
-      Alert.alert('Parabéns!', 'Continue sendo foda!')
+      Alert.alert('Parabéns', 'Você Venceu!')
     }
 
     this.setState({ board, won })
   }
 
+  onLevelSelected = level => {
+    params.difficultLevel = level
+    this.setState(this.createState())
+  }
+
   render() {
     return (
       <SafeAreaView style={styles.container}>
+        <LevelSelection isVisible={this.state.showLevelSelection}
+          onLevelSelected={this.onLevelSelected}
+          onCancel={() => this.setState({ showLevelSelection: false })} />
         <Header flagsLeft={this.minesAmount() - flagsUsed(this.state.board)}
           onNewGame={() => this.setState(this.createState())}
           onFlagPress={() => this.setState({ showLevelSelection: true })} />
@@ -72,8 +82,8 @@ export default class App extends Component {
             onOpenField={this.onOpenField}
             onSelectField={this.onSelectField} />
         </SafeAreaView>
-      </SafeAreaView >
-    )
+      </SafeAreaView>
+    );
   }
 }
 
