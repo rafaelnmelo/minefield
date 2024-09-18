@@ -3,9 +3,10 @@ import { SafeAreaView, StyleSheet, Text, Alert } from 'react-native'
 import params from './src/params'
 import {
   createMinedBoard, cloneBoard, openField, hadExplosion,
-  wonGame, showMines, invertFlag
+  wonGame, showMines, invertFlag, flagsUsed
 } from './src/functions'
 import MineField from './src/components/MineField'
+import Header from './src/components/Header'
 
 export default class App extends Component {
 
@@ -63,19 +64,15 @@ export default class App extends Component {
   render() {
     return (
       <SafeAreaView style={styles.container}>
-        <Text style={styles.welcome}>
-          Iniciando Campo Minado
-        </Text>
-        <Text style={styles.instructions}>
-          Tamanho da grade:
-          {params.getRowsAmount()}x{params.getColumnsAmount()}
-        </Text>
+        <Header flagsLeft={this.minesAmount() - flagsUsed(this.state.board)}
+          onNewGame={() => this.setState(this.createState())}
+          onFlagPress={() => this.setState({ showLevelSelection: true })} />
         <SafeAreaView style={styles.board}>
           <MineField board={this.state.board}
-            onOpenField={this.onOpenField} 
-            onSelectField={this.onSelectField}/>
+            onOpenField={this.onOpenField}
+            onSelectField={this.onSelectField} />
         </SafeAreaView>
-      </SafeAreaView>
+      </SafeAreaView >
     )
   }
 }
