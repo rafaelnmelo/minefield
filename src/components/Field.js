@@ -1,5 +1,5 @@
 import React from "react"
-import { SafeAreaView, StyleSheet, Text } from "react-native"
+import { SafeAreaView, StyleSheet, Text, TouchableWithoutFeedback } from "react-native"
 import params from "../params"
 import Mine from "./Mine"
 import Flag from "./Flag"
@@ -22,14 +22,16 @@ export default props => {
     }
 
     return (
-        <SafeAreaView style={styleField} >
-            {!mined && opened && nearMines > 0 ?
-                <Text style={[styles.label, { color: color }]}>
-                    {nearMines}
-                </Text> : false}
-            {mined && opened ? <Mine /> : false}
-            {flagged && !opened ? <Flag /> : false}
-        </SafeAreaView>
+        <TouchableWithoutFeedback onPress={props.onOpen}>
+            <SafeAreaView style={styleField} >
+                {!mined && opened && nearMines > 0 ?
+                    <Text style={[styles.label, { color: color }]}>
+                        {nearMines}
+                    </Text> : false}
+                {mined && opened ? <Mine /> : false}
+                {flagged && !opened ? <Flag /> : false}
+            </SafeAreaView>
+        </TouchableWithoutFeedback>
     )
 }
 
